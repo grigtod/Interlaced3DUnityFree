@@ -9,7 +9,7 @@ If you decide to use this in an application I have only 1 condition. I would lik
 
 If you have a problem using this you can message me on twitter: @grigtod
 
-It still has some problems:
+Issues:
 - The cameras are not set up properly so the overall quality is not the best.
 - I also suspect that it could be optimized a lot. This uses my second shader ever so I just can't wait to see some shader guru use texture (instead of geometry) to mask the environment. 
 - If you reduce the near clipping plane camera distance you might come across some floating point issues.
