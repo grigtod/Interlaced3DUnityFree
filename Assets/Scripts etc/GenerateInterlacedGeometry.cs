@@ -8,8 +8,10 @@ public class GenerateInterlacedGeometry : MonoBehaviour
     public bool inverse = false;
     public int ignoreLayerIndex;
 
+    public bool combineFilterGeometry = true;
+
     private Camera camRef;
-    private List<GameObject> quads = new List<GameObject>();
+    private List<GameObject> quads = new List<GameObject>(); //try get rid of this...
   
     private Vector3 cornerSW;
     private Vector3 cornerSE;
@@ -17,6 +19,8 @@ public class GenerateInterlacedGeometry : MonoBehaviour
     private Vector3 cornerNE;
     private Vector3 middle;
 
+    private Mesh meshFilter;
+    
     void CalculateCorners()
     {
         //http://forum.unity3d.com/threads/how-to-get-the-actual-width-and-height-of-the-near-clipping-plane.72384/
@@ -43,8 +47,14 @@ public class GenerateInterlacedGeometry : MonoBehaviour
         GenerateQuads();
     }
 
+    Vector3 refPos;
+
     void GenerateQuads()
     {
+
+        transform.parent.position = Vector3.zero;
+        transform.parent.rotation = Quaternion.identity;
+
         if (quads.Count > 0)
         {
             for (int i = 0; i < quads.Count; i++)
@@ -77,7 +87,26 @@ public class GenerateInterlacedGeometry : MonoBehaviour
             quads[index].transform.rotation = camRef.transform.rotation;
             quads[index].layer = ignoreLayerIndex;
         }
-    }
 
+        if (combineFilterGeometry) // this is optional. I left the original implementation as now you can easily see the additional performance boost
+        {
+            gameObject.AddComponent<MeshFilter>();
+            gameObject.AddComponent<MeshRenderer>();
+            CombineInstance[] combine = new CombineInstance[quads.Count];
+            for (int i = 0; i < quads.Count; i++)
+            {
+                combine[i].mesh = quads[i].GetComponent<MeshFilter>().sharedMesh;
+                combine[i].transform = quads[i].transform.localToWorldMatrix;
+                Destroy(quads[i]); // after we combine the mesh we don't really need the quad any more
+            }
+
+
+            gameObject.GetComponent<MeshFilter>().mesh = new Mesh();
+            gameObject.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+            gameObject.layer = ignoreLayerIndex;
+            transform.renderer.material = depthMat;
+        }
+
+    }
 
 }
