@@ -7,11 +7,15 @@ Don't forget to add the sdeck.jar plugin, otherwise the your tablet won't switch
 
 If you decide to use this in an application I have only 1 condition. I would like to be able to play your game/app. You can send me link and key as a twitter message.
 
-If you have a problem using this you can message me on twitter: @grigtod
+If you have some issues when using this you can message me on twitter: @grigtod
 
-Issues:
-- The cameras are not set up properly so the overall quality is not the best.
-- I also suspect that it could be optimized a lot. This uses my second shader ever so I just can't wait to see some shader guru use texture (instead of geometry) to mask the environment. 
+Warning:
+Both the eye cameras and the "InterlacedCam" should start in the centre of the world. You can move and rotate them after the geometry is created!
+
+New:
+Enable "Combine filter geometry" for each camera to increase performance. I left the original code for testing purposes...
+
+Known Issues:
 - If you reduce the near clipping plane camera distance you might come across some floating point issues.
 - You should keep the camera position and rotation centred to the world when you start your app. Once the masking geometry is generated you can rotate and move it around as normal.
 
