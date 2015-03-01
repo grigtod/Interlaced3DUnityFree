@@ -24,12 +24,12 @@ public class GenerateInterlacedGeometry : MonoBehaviour
     void CalculateCorners()
     {
         //http://forum.unity3d.com/threads/how-to-get-the-actual-width-and-height-of-the-near-clipping-plane.72384/
-        cornerNW = camRef.ScreenToWorldPoint(new Vector3(0, (float)(Screen.height - 1), camRef.nearClipPlane + .0001f));
-        cornerNE = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width - 1), (float)(Screen.height - 1), camera.nearClipPlane + .0001f));
+        cornerNW = camRef.ScreenToWorldPoint(new Vector3(0, (float)(Screen.height), camRef.nearClipPlane + .0001f));
+        cornerNE = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width), (float)(Screen.height), camera.nearClipPlane + .0001f));
         cornerSW = camRef.ScreenToWorldPoint(new Vector3(0, 0, camRef.nearClipPlane + .0001f));
-        cornerSE = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width - 1), 0, camRef.nearClipPlane + .0001f));
+        cornerSE = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width), 0, camRef.nearClipPlane + .0001f));
 
-        middle = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width - 1)/2, (float)(Screen.height - 1) / 2, camRef.nearClipPlane + .0001f));
+        middle = camRef.ScreenToWorldPoint(new Vector3((float)(Screen.width)/2, (float)(Screen.height) / 2, camRef.nearClipPlane + .0001f));
 
         //Debug.DrawLine(cornerNW, cornerSE,Color.red);
         //Debug.DrawLine(cornerNE, cornerSW, Color.red);
